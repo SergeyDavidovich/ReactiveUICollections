@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="SelectProducts.UserControls.UpDownControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local="clr-namespace:SelectProducts.UserControls"
+             mc:Ignorable="d">
+    <Border CornerRadius="0"
+            BorderThickness="1"
+            BorderBrush="Black">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Border Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Margin="2">
+                <TextBlock x:Name="CurrentValueTB"
+                           MouseWheel="CurrentValueTB_MouseWheel"
+                           TextAlignment="Center"/>
+            </Border>
+            <Viewbox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right">
+                <Button x:Name="UpButton"
+                    Grid.Column="1"
+                    Click="UpButton_Click"
+                    Content="˄"/>
+            </Viewbox>
+            <Viewbox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right">
+                <Button x:Name="DownButton" Grid.Column="1" Grid.Row="1"
+                    Content="˅"
+                    Click="DownButton_Click"/>
+            </Viewbox>
+        </Grid>
+    </Border>
+</UserControl>

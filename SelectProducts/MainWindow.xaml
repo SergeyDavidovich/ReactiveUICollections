@@ -1,0 +1,133 @@
+﻿<Window x:Class="SelectProducts.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Syncfusion="http://schemas.syncfusion.com/wpf"
+        xmlns:local="clr-namespace:SelectProducts.UserControls"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" 
+        WindowState="Maximized">
+    <Window.Resources>
+        <SolidColorBrush x:Key="GrigBackColor"/>
+    </Window.Resources>
+    <Grid>
+        <Grid.Resources>
+            <Style TargetType="{x:Type DataGrid}">
+                <Setter Property="Margin" Value="10"/>
+                <Setter Property="SelectionMode" Value="Extended"/>
+            </Style>
+            <Style TargetType="{x:Type TextBlock}">
+                <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                <Setter Property="FontSize" Value="22"/>
+                <Setter Property="Background" Value="{StaticResource GrigBackColor}"/>
+                <Setter Property="TextAlignment" Value="Center"/>
+            </Style>
+        </Grid.Resources>
+
+        <Grid.Background>
+            <StaticResource ResourceKey="GrigBackColor"/>
+        </Grid.Background>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="22"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Menu Grid.Row="0" 
+              Grid.Column="0" 
+              Grid.ColumnSpan="2" 
+              Grid.RowSpan="2">
+            <MenuItem x:Name="SelectButton" Margin="5" Header="Select"/>
+            <MenuItem x:Name="UnSelectButton" Margin="5" Header="UnSelect" Command="{Binding UnSelectCommand}"/>
+        </Menu>
+        <TextBlock Grid.Row="1" 
+                   Grid.Column="0"
+                   Text="Products on Store"/>
+        <DataGrid Grid.Row="2"
+                  Grid.Column="0"
+                  ItemsSource="{Binding ProductsInStore}" 
+                  SelectedItem="{Binding SelectedProduct, Mode=TwoWay}" IsReadOnly="True">
+        </DataGrid>
+
+        <Grid Grid.Column="1" 
+                    Grid.Row="1"
+                    Grid.RowSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="Products in order"/>
+
+            <ListView x:Name="MyListView" 
+                      Grid.Row="1"
+                      ItemsSource="{Binding ProductsInOrder}"
+                      SelectedItem="{Binding SelectedProductInOrder}"
+                      Margin="20" 
+                      FontSize="16" Background="{x:Null}">
+                <ListView.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Margin" Value="2"/>
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                    </Style>
+                    <Style TargetType="Syncfusion:SfDomainUpDown">
+                        <!--<Setter Property="Margin" Value="10"/>-->
+                        <Setter Property="AutoReverse" Value="False"/>
+                        <Setter Property="AccentBrush" Value="LightGray"/>
+                        <Setter Property="EnableSpinAnimation" Value="False"/>
+                        <Setter Property="FontSize" Value="12"/>
+                    </Style>
+                </ListView.Resources>
+
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        <Setter Property="BorderBrush" Value="{x:Null}"/>
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="Margin" Value="1"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="2" Height="60">
+                            <Grid>
+                                <Grid.Resources>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                        <Setter Property="Margin" Value="6,0,0,10"/>
+                                    </Style>
+                                    <Style TargetType="local:UpDownControl">
+                                        <Setter Property="Margin" Value="10"/>
+                                    </Style>
+                                </Grid.Resources>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <TextBlock Grid.Column="0" Text="{Binding ProductID}"/>
+                                <TextBlock Grid.Column="1" Text="{Binding ProductName}" TextAlignment="Left"/>
+                                <TextBlock Grid.Column="2" Text="{Binding UnitPrice}" TextAlignment="Center"/>
+                                <local:UpDownControl Grid.Column="3" ItemsSource="{Binding Quantity}" 
+                                                     CurrentValue="{Binding SelectedQuantity,Mode=TwoWay}"/>
+                                <local:UpDownControl Grid.Column="4" ItemsSource="{Binding Discount}" 
+                                                     CurrentValue="{Binding SelectedDiscount,Mode=TwoWay}"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <TextBlock Grid.Row="2" FontSize="25" Text="{Binding TotalSum, StringFormat='Total sum: {0}'}"/>
+        </Grid>
+    </Grid>
+</Window>
